@@ -32,6 +32,7 @@ Learning was performed for 20 epochs with 1 million train data items and 5,000 v
 
 During this training, we measured WER and some BLEU values. The values ​​in the graph above are obtained by inputting target[:,1:] to the target input of the Transformer Decoder, but for WER and BLEU in the table below, only the source language is input to the model. No training data is used for the target input of the Transformer Decoder. These are numbers obtained by using the model in an autoregressive manner.
 
+<div align="center">
 <table>
 <caption> Autoregressive train data
 <thread>
@@ -58,7 +59,7 @@ During this training, we measured WER and some BLEU values. The values ​​in 
 <tr><td style="text-align:right;">19<td>29.5<td>48.7
 <tr><td style="text-align:right;">20<td>29.1<td>47.9
 </table>
-
+</div>
 WER 29.1 and BLEU 47.9 are obtained at 20 epochs.
 
 ## Learning with Mask-Predict.
@@ -79,6 +80,7 @@ https://github.com/facebookresearch/Mask-Predict/tree/main
 
 I used it as a reference. length_beam_size was set to 3. This means iterating over three types of length prediction for the target language. Also, batch_size = 1, number_of_test_data = 50.
 
+<div align="center">
 <table>
 <caption>Mask-Preict train data
 <th>epoch<th>WER<th>BLEU
@@ -103,7 +105,7 @@ I used it as a reference. length_beam_size was set to 3. This means iterating ov
 <tr><td style="text-align:right;">19<td>35.1<td>42.1
 <tr><td style="text-align:right;">20<td>34.4<td>40.2
 </table>
-
+</div>
 In epoch 12, I got WER 32.6, BLEU 44.9.
 
 ## Mask-Predict using CTC loss
@@ -126,6 +128,7 @@ Length_beam_size was set to 3. This means iterating on three types of target lan
 
 Initially, we introduced CTCLoss to weaken the length dependence of the predicted target language, but the value of 3 was better than length_beam_size = 2,4,5.
 
+<div align="center">
 <table>
 <caption>CTC Mask-Preict train inference func. data
 <th>　　epoch<th>　　　　WER<th>　　　BLEU
@@ -195,6 +198,7 @@ I will post graphs of loss, WER, and BLEU for train data and validation data. In
 
 Next, we will post a table of inference evaluation for test data. The number of test data is 50 and batch_size = 1.
 
+<div align="center">
 <table>
 <caption>EncoderOuts Upsampling inference evaluation values
 <th>　　　　　epoch<th>　　　　　　　WER<th>　　　　　　BLEU
@@ -220,6 +224,5 @@ Next, we will post a table of inference evaluation for test data. The number of 
 <tr><td style="text-align:right;">20<td>24.0<td>52.5
 </table>
 </div>
-
 
 In epoch 17, I got WER 24.1 and BLEU 55.1. In general, the accuracy of the non-autoregressive type is lower than that of the autoregressive type, but in this experiment, it is worth noting that the accuracy of the autoregressive type was WER 29.1 and BLEU 47.9.

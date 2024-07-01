@@ -26,9 +26,11 @@ The train is 1 million, the val is 5000, and the test is 50. In my environment, 
 
 Learning was performed for 20 epochs with 1 million train data items and 5,000 validation data items. Post a graph of loss and WER changes.
 
+<div align="center">
 ![fig1](https://github.com/toshiouchi/Machine_Translation/assets/121741811/dc68910a-2759-4607-90c1-6847d18d1bfa)
 
 ![fig2](https://github.com/toshiouchi/Machine_Translation/assets/121741811/e113eeed-a83b-4bff-a782-3c2ed87a0063)
+</div>
 
 During this training, we measured WER and some BLEU values. The values ​​in the graph above are obtained by inputting target[:,1:] to the target input of the Transformer Decoder, but for WER and BLEU in the table below, only the source language is input to the model. No training data is used for the target input of the Transformer Decoder. These are numbers obtained by using the model in an autoregressive manner.
 

@@ -70,6 +70,8 @@ WER 29.1 and BLEU 47.9 are obtained at 20 epochs.
 
 Learning was performed for 20 epochs with 1 million train data items and 5,000 validation data items. Post a graph of changes in loss0, loss, WER and BLEU. Loss0 is the loss in the masked target language, and Loss is Loss0 plus the loss in predicting the length of the target sentence.
 
+<div align="center">
+
 ![fig3](https://github.com/toshiouchi/Machine_Translation/assets/121741811/6ba38474-d5fe-4a68-a927-02889a7bb469)
 
 ![fig4](https://github.com/toshiouchi/Machine_Translation/assets/121741811/2c0e8934-366d-4a66-bcc4-ec129e0dcaa7)
@@ -77,6 +79,8 @@ Learning was performed for 20 epochs with 1 million train data items and 5,000 v
 ![fig5](https://github.com/toshiouchi/Machine_Translation/assets/121741811/6a104ebf-4209-4cd9-9be8-96484e8a1fca)
 
 ![fig6](https://github.com/toshiouchi/Machine_Translation/assets/121741811/ca7e1d81-4499-49c2-8f51-ffc071f925bd)
+
+</div>
 
 Next, we measured the WER and BLEU values ​​for each epoch and will post them here. In this measurement, the input to the model is only the source language, and information from the training data is not used. For the target input of Transformer Decoder, all sequences except &lt;pad&gt; were iterated 10 times starting from the embedded text of &lt;mask&gt;. The functions used for inference are Fairseq's Mask-Predict.
 

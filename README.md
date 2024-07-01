@@ -122,6 +122,8 @@ I thought that the bottleneck in Mask-Predict's accuracy may be in predicting th
 
 We will post graphs of changes in Loss0, Loss, WER, and BLEU for train data and validation data during learning. Loss0 is the CTCLoss of the target sentence calculated without considering the mask. Loss is the sum of this and the loss in predicting the length of the target language.
 
+<div align="center">
+
 ![fig7](https://github.com/toshiouchi/Machine_Translation/assets/121741811/17496c4e-1f5a-47b6-8083-f1f0e8c605ee)
 
 ![fig8](https://github.com/toshiouchi/Machine_Translation/assets/121741811/9dc98ca9-8191-4176-9ffb-682f9e597b08)
@@ -129,6 +131,8 @@ We will post graphs of changes in Loss0, Loss, WER, and BLEU for train data and 
 ![fig9](https://github.com/toshiouchi/Machine_Translation/assets/121741811/9eff8117-829d-44bc-ad27-656514848253)
 
 ![fig10](https://github.com/toshiouchi/Machine_Translation/assets/121741811/c0fd471c-09eb-4c3b-b2da-bdb38539d3b8)
+
+</div>
 
 Similar to Mask-Predict, we evaluated the inference results at each epoch. Mask-Predict inference using CTCLoss was compared using two functions. One is inference, which is a function that decodes the output of the Transformer Decoder in consideration of CTC during the iteration to reduce the number of inference masks, and then reapplies the mask. Another is that in the iteration to reduce the number of inference masks, the position of the mask is adjusted to upasmpling, and the target language reapplies the mask without decoding. The upasmpling of the target language in the Transformer Decoder is not done. Inference1 is a function that does not decode when reapplying the mask.
 
@@ -200,9 +204,13 @@ Training continued for up to 20 epochs.
 
 I will post graphs of loss, WER, and BLEU for train data and validation data. In this program, the neural network for learning and inference can be predictions = model( source_embed_sentences ) and does not depend on target_embed_sentences. In other words, learning and inference can use the same algorithm's model function. Inference is non-autoregressive.
 
+<div align="center">
+
 ![fig11](https://github.com/toshiouchi/Machine_Translation/assets/121741811/113047e4-4f72-464e-a43f-8976a2e1f8d3)
 
 ![fig12](https://github.com/toshiouchi/Machine_Translation/assets/121741811/b4309c4e-af71-4e96-89a8-4eabcd3b733f)
+
+</div>
 
 Next, we will post a table of inference evaluation for test data. The number of test data is 50 and batch_size = 1.
 

@@ -30,8 +30,6 @@ Learning was performed for 20 epochs with 1 million train data items and 5,000 v
 
 ![fig2](https://github.com/toshiouchi/Machine_Translation/assets/121741811/e113eeed-a83b-4bff-a782-3c2ed87a0063)
 
-![fig3](https://github.com/toshiouchi/Machine_Translation/assets/121741811/6ba38474-d5fe-4a68-a927-02889a7bb469)
-
 During this training, we measured WER and some BLEU values. The values ​​in the graph above are obtained by inputting target[:,1:] to the target input of the Transformer Decoder, but for WER and BLEU in the table below, only the source language is input to the model. No training data is used for the target input of the Transformer Decoder. These are numbers obtained by using the model in an autoregressive manner.
 
 <table>
@@ -66,6 +64,8 @@ WER 29.1 and BLEU 47.9 are obtained at 20 epochs.
 ## Learning with Mask-Predict.
 
 Learning was performed for 20 epochs with 1 million train data items and 5,000 validation data items. Post a graph of changes in loss0, loss, WER and BLEU. Loss0 is the loss in the masked target language, and Loss is Loss0 plus the loss in predicting the length of the target sentence.
+
+![fig3](https://github.com/toshiouchi/Machine_Translation/assets/121741811/6ba38474-d5fe-4a68-a927-02889a7bb469)
 
 ![fig4](https://github.com/toshiouchi/Machine_Translation/assets/121741811/2c0e8934-366d-4a66-bcc4-ec129e0dcaa7)
 
@@ -117,6 +117,8 @@ We will post graphs of changes in Loss0, Loss, WER, and BLEU for train data and 
 ![fig8](https://github.com/toshiouchi/Machine_Translation/assets/121741811/9dc98ca9-8191-4176-9ffb-682f9e597b08)
 
 ![fig9](https://github.com/toshiouchi/Machine_Translation/assets/121741811/9eff8117-829d-44bc-ad27-656514848253)
+
+![fig10](https://github.com/toshiouchi/Machine_Translation/assets/121741811/c0fd471c-09eb-4c3b-b2da-bdb38539d3b8)
 
 Similar to Mask-Predict, we evaluated the inference results at each epoch. Mask-Predict inference using CTCLoss was compared using two functions. One is inference, which is a function that decodes the output of the Transformer Decoder in consideration of CTC during the iteration to reduce the number of inference masks, and then reapplies the mask. Another is that in the iteration to reduce the number of inference masks, the position of the mask is adjusted to upasmpling, and the target language reapplies the mask without decoding. The upasmpling of the target language in the Transformer Decoder is not done. Inference1 is a function that does not decode when reapplying the mask.
 
@@ -186,8 +188,6 @@ In Mask-Predict using CTC loss, the masked target sentence (teacher data) is ups
 Training continued for up to 20 epochs.
 
 I will post graphs of loss, WER, and BLEU for train data and validation data. In this program, the neural network for learning and inference can be predictions = model( source_embed_sentences ) and does not depend on target_embed_sentences. In other words, learning and inference can use the same algorithm's model function. Inference is non-autoregressive.
-
-![fig10](https://github.com/toshiouchi/Machine_Translation/assets/121741811/c0fd471c-09eb-4c3b-b2da-bdb38539d3b8)
 
 ![fig11](https://github.com/toshiouchi/Machine_Translation/assets/121741811/113047e4-4f72-464e-a43f-8976a2e1f8d3)
 

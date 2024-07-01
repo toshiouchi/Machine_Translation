@@ -119,3 +119,107 @@ We will post graphs of changes in Loss0, Loss, WER, and BLEU for train data and 
 ![fig9](https://github.com/toshiouchi/Machine_Translation/assets/121741811/9eff8117-829d-44bc-ad27-656514848253)
 
 Similar to Mask-Predict, we evaluated the inference results at each epoch. Mask-Predict inference using CTCLoss was compared using two functions. One is inference, which is a function that decodes the output of the Transformer Decoder in consideration of CTC during the iteration to reduce the number of inference masks, and then reapplies the mask. Another is that in the iteration to reduce the number of inference masks, the position of the mask is adjusted to upasmpling, and the target language reapplies the mask without decoding. The upasmpling of the target language in the Transformer Decoder is not done. Inference1 is a function that does not decode when reapplying the mask.
+
+Length_beam_size was set to 3. This means iterating on three types of target language predictions. Also, batch_size = 1, number_of_test_data = 50.
+
+Initially, we introduced CTCLoss to weaken the length dependence of the predicted target language, but the value of 3 was better than length_beam_size = 2,4,5.
+
+<table>
+<caption>CTC Mask-Preict train inference func. data
+<th>　　epoch<th>　　　　WER<th>　　　BLEU
+<tr><td style="text-align:right;"> 1<td>76.0<td>0.00
+<tr><td style="text-align:right;"> 2<td>59.8<td>16.5
+<tr><td style="text-align:right;"> 3<td>52.8<td>24.3
+<tr><td style="text-align:right;"> 4<td>57.3<td>22.2
+<tr><td style="text-align:right;"> 5<td>48.2<td>25.2
+<tr><td style="text-align:right;"> 6<td>51.0<td>25.0
+<tr><td style="text-align:right;"> 7<td>45.2<td>29.4
+<tr><td style="text-align:right;"> 8<td>44.2<td>28.4
+<tr><td style="text-align:right;"> 9<td>46.1<td>28.3
+<tr><td style="text-align:right;">10<td>43.8<td>30.7
+<tr><td style="text-align:right;">11<td>42.0<td>37.5
+<tr><td style="text-align:right;">12<td>41.8<td>35.3
+<tr><td style="text-align:right;">13<td>40.9<td>37.4
+<tr><td style="text-align:right;">14<td>41.8<td>36.1
+<tr><td style="text-align:right;">15<td>39.7<td>36.5
+<tr><td style="text-align:right;">16<td>40.1<td>36.8
+<tr><td style="text-align:right;">17<td>40.5<td>34.1
+<tr><td style="text-align:right;">18<td>38.0<td>38.4
+<tr><td style="text-align:right;">19<td>39.8<td>35.5
+<tr><td style="text-align:right;">20<td>34.1<td>42.6
+</table>
+</div>
+
+<div align="center">
+<table>
+<caption>CTC Mask-Preict train inference1 func. data
+<th>　　epoch<th>　　　　WER<th>　　　BLEU
+<tr><td style="text-align:right;"> 1<td>73.2<td>0.00
+<tr><td style="text-align:right;"> 2<td>56.0<td>13.3
+<tr><td style="text-align:right;"> 3<td>49.4<td>20.8
+<tr><td style="text-align:right;"> 4<td>41.5<td>27.1
+<tr><td style="text-align:right;"> 5<td>45.1<td>24.7
+<tr><td style="text-align:right;"> 6<td>38.4<td>33.3
+<tr><td style="text-align:right;"> 7<td>34.0<td>34.9
+<tr><td style="text-align:right;"> 8<td>38.8<td>35.2
+<tr><td style="text-align:right;"> 9<td>39.4<td>30.9
+<tr><td style="text-align:right;">10<td>39.4<td>34.9
+<tr><td style="text-align:right;">11<td>37.0<td>37.5
+<tr><td style="text-align:right;">12<td>38.0<td>37.0
+<tr><td style="text-align:right;">13<td>40.2<td>29.2
+<tr><td style="text-align:right;">14<td>37.9<td>34.9
+<tr><td style="text-align:right;">15<td>38.9<td>36.6
+<tr><td style="text-align:right;">16<td>38.9<td>34.4
+<tr><td style="text-align:right;">17<td>40.5<td>28.5
+<tr><td style="text-align:right;">18<td>37.9<td>33.1
+<tr><td style="text-align:right;">19<td>33.2<td>45.3
+<tr><td style="text-align:right;">20<td>37.2<td>34.7
+</table>
+</div>
+
+WER 33.2 BLEU 45.3 in epoch 19 of inferece1 were got.
+
+## A non-autoregressive program that upsamples the output of TransformerEncoder and makes it the target input of TransformerDecoder. Loss is CTC.
+
+In Mask-Predict using CTC loss, the masked target sentence (teacher data) is upsampled twice in the sequence direction and becomes the target input of the TransformerDecoder. On the other hand, in the method of posting the evaluation values ​​here, the output of TransformerEncoder is upsampled twice in the sequence direction and used as the target input of TransformerDecoder. The loss is CTC Loss.
+
+Training continued for up to 20 epochs.
+
+I will post graphs of loss, WER, and BLEU for train data and validation data. In this program, the neural network for learning and inference can be predictions = model( source_embed_sentences ) and does not depend on target_embed_sentences. In other words, learning and inference can use the same algorithm's model function. Inference is non-autoregressive.
+
+![fig10](https://github.com/toshiouchi/Machine_Translation/assets/121741811/c0fd471c-09eb-4c3b-b2da-bdb38539d3b8)
+
+![fig11](https://github.com/toshiouchi/Machine_Translation/assets/121741811/113047e4-4f72-464e-a43f-8976a2e1f8d3)
+
+![fig12](https://github.com/toshiouchi/Machine_Translation/assets/121741811/b4309c4e-af71-4e96-89a8-4eabcd3b733f)
+
+Next, we will post a table of inference evaluation for test data. The number of test data is 50 and batch_size = 1.
+
+<table>
+<caption>EncoderOuts Upsampling inference evaluation values
+<th>　　　　　epoch<th>　　　　　　　WER<th>　　　　　　BLEU
+<tr><td style="text-align:right;"> 1<td>41.0<td>25.2
+<tr><td style="text-align:right;"> 2<td>34.4<td>33.3
+<tr><td style="text-align:right;"> 3<td>32.7<td>34.6
+<tr><td style="text-align:right;"> 4<td>34.0<td>37.2
+<tr><td style="text-align:right;"> 5<td>34.0<td>34.1
+<tr><td style="text-align:right;"> 6<td>31.4<td>40.1
+<tr><td style="text-align:right;"> 7<td>32.5<td>37.5
+<tr><td style="text-align:right;"> 8<td>29.8<td>42.4
+<tr><td style="text-align:right;"> 9<td>29.6<td>44.8
+<tr><td style="text-align:right;">10<td>26.9<td>47.8
+<tr><td style="text-align:right;">11<td>30.0<td>45.6
+<tr><td style="text-align:right;">12<td>26.7<td>50.3
+<tr><td style="text-align:right;">13<td colspan="2">Not measured
+<tr><td style="text-align:right;">14<td>25.6<td>50.8
+<tr><td style="text-align:right;">15<td>25.3<td>50.8
+<tr><td style="text-align:right;">16<td>25.4<td>51.5
+<tr><td style="text-align:right;">17<td>24.1<td>55.1
+<tr><td style="text-align:right;">18<td>23.2<td>54.1
+<tr><td style="text-align:right;">19<td>26.0<td>50.2
+<tr><td style="text-align:right;">20<td>24.0<td>52.5
+</table>
+</div>
+
+
+In epoch 17, I got WER 24.1 and BLEU 55.1. In general, the accuracy of the non-autoregressive type is lower than that of the autoregressive type, but in this experiment, it is worth noting that the accuracy of the autoregressive type was WER 29.1 and BLEU 47.9.

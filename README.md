@@ -6,14 +6,10 @@ Machine training data for a model that upsamples EncoderOuts and uses it as targ
 
 This report reports on training data for machine translation that translates Japanese to English.The report covers the following four areas.
 
-1.Autoregressive learning using Transformer
-　　Program file name Autoregressive.ipynb
-2.Mask-Predict non-autoregressive learning
-　　Program file name Mask_Predict.ipynb
-3.Non-autoregressive learning with CTCLoss and Mask-Predict
-　　Program file name CTC_Mask_Predict.ipynb
-4.Upsampling the Encoder output to the Decoder target input. loss is CTC.
-　　Program file name EncoderOuts_Upsampling.ipynb
+1.Autoregressive learning using Transformer. Program file name Autoregressive.ipynb
+2.Mask-Predict non-autoregressive learning. Program file name Mask_Predict.ipynb
+3.Non-autoregressive learning with CTCLoss and Mask-Predict. Program file name CTC_Mask_Predict.ipynb
+4.Upsampling the Encoder output to the Decoder target input. loss is CTC. Program file name EncoderOuts_Upsampling.ipynb
 
 ## Learning Data
 

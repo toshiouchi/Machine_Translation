@@ -20,7 +20,7 @@ The data is from the Japanese-English corpus.
 
 https://www.kecl.ntt.co.jp/icl/lirg/jparacrawl/
 
-This is the data. The train is 1 million, the val is 5000, and the test is 50. In my environment, if an English sentence contains multi-byte characters, the separated English characters in the idx_to_word.json file become garbled, so I did not use English sentences that contained multi-byte characters for learning.
+The train is 1 million, the val is 5000, and the test is 50. In my environment, if an English sentence contains multi-byte characters, the separated English characters in the idx_to_word.json file become garbled, so I did not use English sentences that contained multi-byte characters for learning.
 
 ## Autoregressive learning
 

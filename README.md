@@ -10,16 +10,21 @@ What is noteworthy is that the non-autoregressive program had a smaller WER and 
 
 The report covers the following four areas.
 
+```
 1.Autoregressive learning using Transformer.  
   WER 29.1 BLEU 47.9
   Program file name Autoregressive.ipynb.
 
-2.Mask-Predict non-autoregressive learning. Program file name Mask_Predict.ipynb.
+2.Mask-Predict non-autoregressive learning.
+  Program file name Mask_Predict.ipynb.
 
-3.Non-autoregressive learning with CTCLoss and Mask-Predict. Program file name CTC_Mask_Predict.ipynb.
+3.Non-autoregressive learning with CTCLoss and Mask-Predict.
+  Program file name CTC_Mask_Predict.ipynb.
 
-4.Upsampling the Encoder output to the Decoder target input. loss is CTC. Program file name EncoderOuts_Upsampling.ipynb. WER 24.1、BLEU 55.1
-
+4.Upsampling the Encoder output to the Decoder target input. loss is CTC.
+　WER 24.1、BLEU 55.1
+　Program file name EncoderOuts_Upsampling.ipynb. 
+```
 ## Learning Data
 
 The data is from the Japanese-English corpus.

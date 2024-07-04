@@ -10,7 +10,9 @@ What is noteworthy is that the non-autoregressive program had a smaller WER and 
 
 The report covers the following four areas.
 
-1.Autoregressive learning using Transformer. Program file name Autoregressive.ipynb. WER 29.1 BLEU 47.9
+1.Autoregressive learning using Transformer.  
+  WER 29.1 BLEU 47.9
+  Program file name Autoregressive.ipynb.
 
 2.Mask-Predict non-autoregressive learning. Program file name Mask_Predict.ipynb.
 

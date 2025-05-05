@@ -23,7 +23,21 @@ The report covers the following four areas.
 
 4.Upsampling the Encoder output to the Decoder target input. loss is CTC.
 　WER 24.1、BLEU 55.1
-　Program file name EncoderOuts_Upsampling.ipynb. 
+  Non-autoregressive
+　Program file name EncoderOuts_Upsampling.ipynb.
+
+5.Embedding source language is upsampled to twice the sequence length. Passed it through
+  12-layer TransformerEncoder and backward-corrected with CTCLoss
+  WER 24.5 BLEU 50.3
+  Non-autoregressive
+  Program file name EncoderOnly.ipynb
+
+6.Upsample the embedded source language to twice the sequence length.
+  Pass it through a 12-layer RetNet and perform backward filtering with CTCLoss
+  WER: 32.0 BLEU: 37.2
+  Non-autoregressive
+  Program file name: RetNet_MS.ipynb
+
 ```
 ## Learning Data
 
@@ -253,3 +267,66 @@ Next, we will post a table of inference evaluation for test data. The number of 
 </div>
 
 In epoch 17, I got WER 24.1 and BLEU 55.1. In general, the accuracy of the non-autoregressive type is lower than that of the autoregressive type, but in this experiment, it is worth noting that the accuracy of the autoregressive type was WER 29.1 and BLEU 47.9.
+
+## Data when the embedded source language is upsampled to twice the sequence length, passed through a 12-layer TransformerEncoder, and loss.backward() is applied with CTCLoss.
+
+![Enconly_Loss](https://github.com/user-attachments/assets/60ed8fdb-ea77-4936-b5e8-0a4e2a688ae1)
+
+![Enconly_WER](https://github.com/user-attachments/assets/885dfc49-e666-4bfb-8cb9-73dbd90b208c)
+
+![Enconly_BLEU](https://github.com/user-attachments/assets/bb58d3ac-2794-4f9e-982c-1d88300cebdf)
+
+<table>
+<caption>Upsampling+TransformerEncoder+CTCLoss inference evaluation values
+<th>　　　　　epoch<th>　　　　　　　WER<th>　　　　　　BLEU
+<tr><td style="text-align:right;"> 1<td>40.9<td>25.5
+<tr><td style="text-align:right;"> 2<td>38.0<td>28.5
+<tr><td style="text-align:right;"> 3<td>35.1<td>37.0
+<tr><td style="text-align:right;"> 4<td>31.1<td>39.7
+<tr><td style="text-align:right;"> 5<td>31.8<td>40.3
+<tr><td style="text-align:right;"> 6<td>30.4<td>42.5
+<tr><td style="text-align:right;"> 7<td>31.7<td>43.4
+<tr><td style="text-align:right;"> 8<td>30.9<td>41.9
+<tr><td style="text-align:right;"> 9<td>27.1<td>46.1
+<tr><td style="text-align:right;">10<td>27.6<td>45.8
+<tr><td style="text-align:right;">11<td>23.8<td>49.7
+<tr><td style="text-align:right;">12<td>24.5<td>50.3
+<tr><td style="text-align:right;">13<td>25.1<td>49.6
+<tr><td style="text-align:right;">14<td>25.0<td>49.6
+<tr><td style="text-align:right;">15<td>25.5<td>50.5
+<tr><td style="text-align:right;">16<td>24.9<td>50.0
+<tr><td style="text-align:right;">17〜<td colspan="2">Early Stopping
+</table>
+</div>
+
+## Data when the embedded source language is upsampled to twice the sequence length, passed through a 12-layer RetNet, and loss.backward() is applied with CTCLoss.
+
+RetNet is used with RetNetDecorder in
+
+https://github.com/microsoft/torchscale
+
+![RetNet_loss](https://github.com/user-attachments/assets/54555a31-a36c-4462-b54e-00ec0a899244)
+
+![RetNet_WER](https://github.com/user-attachments/assets/244a8195-c51d-4e85-a0cd-22af01ec4431)
+
+![RetNet_BLEU](https://github.com/user-attachments/assets/29fda2e7-355e-4dd7-870b-135846e475fb)
+
+<table>
+<caption>Upsampling+RetNet+CTCLoss inference evaluation values
+<th>　　　　　epoch<th>　　　　　　　WER<th>　　　　　　BLEU
+<tr><td style="text-align:right;"> 1<td>45.4<td>19.2
+<tr><td style="text-align:right;"> 2<td>41.1<td>23.8
+<tr><td style="text-align:right;"> 3<td>40.9<td>24.9
+<tr><td style="text-align:right;"> 4<td>38.8<td>27.6
+<tr><td style="text-align:right;"> 5<td>37.6<td>34.1
+<tr><td style="text-align:right;"> 6<td>36.2<td>32.7
+<tr><td style="text-align:right;"> 7<td>37.0<td>32.7
+<tr><td style="text-align:right;"> 8<td>36.5<td>31.2
+<tr><td style="text-align:right;"> 9<td>35.7<td>33.7
+<tr><td style="text-align:right;">10<td>35.4<td>35.2
+<tr><td style="text-align:right;">11<td>35.1<td>36.8
+<tr><td style="text-align:right;">12<td>32.0<td>40.7
+<tr><td style="text-align:right;">13<td>33.9<td>37.2
+<tr><td style="text-align:right;">14〜<td colspan="2">Early Stopping
+</table>
+</div>
